@@ -34,7 +34,7 @@ void addlog(const char * fmt, ...)
 
 	printf("%s\n", buf);
 
-	if ((fp = fopen("irctest.log", "ab")) != 0) {
+	if ((fp = fopen("albion.log", "ab")) != 0) {
 		fprintf(fp, "%s\n", buf);
 		fclose(fp);
 	}
