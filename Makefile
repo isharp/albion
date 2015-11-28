@@ -7,8 +7,8 @@ EXECUTABLES=albion
 
 all:	$(EXECUTABLES)
 
-irctest:	irctest.o
-	$(CC) -o irctest irctest.o $(LIBS)
+albion:	albion.o
+	$(CC) -o albion albion.o $(LIBS)
 
 clean:
 	-rm -f $(EXECUTABLES) *.o *.exe
