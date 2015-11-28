@@ -1,4 +1,13 @@
-/* Basic irc client. Capable of ping-pong. */
+/* Basic irc client. Capable of ping-pong.
+   
+   Example invocation:
+  
+   for SSL:
+   ./albion ##irc.rizon.net:6697 albion #albion 
+   
+   for non-SSL:
+   ./albion irc.rizon.net:6666 albion #albion 
+*/
 
 #include <stdio.h>
 #include <stdarg.h>
