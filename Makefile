@@ -1,21 +1,14 @@
+EXECUTABLE=albion
 CC = gcc
-CFLAGS = -Wall -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -O3 -fpic -DENABLE_THREADS -D_REENTRANT -DENABLE_SSL
-LIBS = -L../src/ -lircclient -lpthread -lssl -lcrypto  -lnsl
-INCLUDES=-I/usr/include/libircclient
+LIBS = -lircclient -lpthread -lssl -lcrypto  -lnsl
+INCLUDES= -Iinclude -I/usr/include/libircclient
+CFLAGS = -g -Wall -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -O3 -fpic -DENABLE_THREADS -D_REENTRANT -DENABLE_SSL $(INCLUDES)
 
-EXECUTABLES=albion
+HEADERS = $(wildcard include/*.h)
+SRC = $(wildcard src/*.c)
 
-all:	$(EXECUTABLES)
 
-albion:	albion.o
-	$(CC) -o albion albion.o $(LIBS)
-
+$(EXECUTABLE): $(patsubst %.c, %.o, $(SRC))
+	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
 clean:
-	-rm -f $(EXECUTABLES) *.o *.exe
-
-distclean: clean
-	-rm -f Makefile *.log
-
-.c.o:
-	@echo "Compiling  $<"
-	@$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
+	rm -f src/*.o  $(EXECUTABLE)
