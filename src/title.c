@@ -76,6 +76,11 @@ static int init(CURL **conn, const char *url, struct mem_vec *chunk,
         fprintf(stderr, "Failed to set write data [%s]\n", curl_err_buff);
         return 0;
     }
+    code = curl_easy_setopt(*conn, CURLOPT_SSL_VERIFYPEER, 0);
+    if (code != CURLE_OK) {
+        fprintf(stderr, "Failed to set write data [%s]\n", curl_err_buff);
+        return 0;
+    }
     return 1;
 }
 
