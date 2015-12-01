@@ -5,6 +5,8 @@
 #include "log.h"
 #include "event.h"
 #include "dcc.h"
+#include "url.h"
+#include "title.h"
 
 void dump_event(irc_session_t * session, const char * event, 
                 const char * origin, const char ** params, unsigned int count)
@@ -28,9 +30,12 @@ void dump_event(irc_session_t * session, const char * event,
 void event_join(irc_session_t * session, const char * event,
                 const char * origin, const char ** params, unsigned int count)
 {
+    irc_ctx_t * ctx;
+    ctx = irc_get_ctx(session);
     dump_event(session, event, origin, params, count);
     irc_cmd_user_mode(session, "+i");
-    irc_cmd_msg(session, params[0], "HWÆT! Hell is empty and all the"
+    if (!strncmp(origin, ctx->nick, strlen(ctx->nick)))
+        irc_cmd_msg(session, params[0], "HWÆT! Hell is empty and all the"
                                                         " devils are here.");
 }
 
@@ -55,7 +60,8 @@ void event_privmsg(irc_session_t * session, const char * event,
 void event_channel(irc_session_t * session, const char * event, 
                 const char * origin, const char ** params, unsigned int count)
 {
-    char nickbuf[128];
+    char *title;
+    char *url;
 
     if (count != 2)
         return;
@@ -65,13 +71,30 @@ void event_channel(irc_session_t * session, const char * event,
 
     if (!origin)
         return;
-
-    irc_target_get_nick(origin, nickbuf, sizeof(nickbuf));
-
+    
+    url = get_url(params[1]);
+    if (url) {
+        title = get_title(url);
+        if (title) {
+            irc_cmd_msg(session, params[0], title);
+            free(url);
+            free(title);
+        }
+    }
     if (!strcmp(params[1], ".help")) {
         irc_cmd_msg(session, params[0], ".help, .ping");
     } else if (!strcmp(params[1], ".ping")) {
         irc_cmd_msg(session, params[0], "pong");
+    } else if (!strcmp(params[1], ".urban frat 3")) {
+        irc_cmd_msg(session, params[0],
+                  "a place that breeds retarded fucks (very similar to a colleg"
+                  "iate football program). These guys usually care about nothin"
+                  "g but getting drunk and raping ignorant women that are dumb "
+                  "enough to let it happen. They have attitudes that closely re"
+                  "semble that of the ass holes you hated in jr high. I love ho"
+                  "w they make new recruits wear dress clothes and act all upst"
+                  "anding and important, yet they are the worst piles of trash "
+                  "on campus. Most members end u");
     }
 }
 
