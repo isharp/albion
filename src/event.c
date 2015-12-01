@@ -4,7 +4,6 @@
 #include "libircclient.h"
 #include "log.h"
 #include "event.h"
-#include "dcc.h"
 #include "url.h"
 #include "title.h"
 
@@ -105,26 +104,4 @@ void event_numeric(irc_session_t *session, unsigned int event,
     sprintf(buf, "%d", event);
 
     dump_event(session, buf, origin, params, count);
-}
-
-void irc_event_dcc_chat(irc_session_t *session, const char *nick, 
-                                            const char *addr, irc_dcc_t dccid)
-{
-    printf("DCC chat [%d] requested from '%s' (%s)\n", dccid, nick, addr);
-
-    irc_dcc_accept(session, dccid, 0, dcc_recv_callback);
-}
-
-void irc_event_dcc_send(irc_session_t *session, const char *nick, 
-                                    const char *addr, const char *filename, 
-                                    unsigned long size, irc_dcc_t dccid)
-{
-    FILE *fp;
-    printf("DCC send [%d] requested from '%s' (%s): %s (%lu bytes)\n", 
-                                            dccid, nick, addr, filename, size);
-
-    if ((fp = fopen("file", "wb")) == 0)
-        abort();
-
-    irc_dcc_accept(session, dccid, fp, dcc_file_recv_callback);
 }
