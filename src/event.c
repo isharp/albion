@@ -8,8 +8,8 @@
 #include "url.h"
 #include "title.h"
 
-void dump_event(irc_session_t * session, const char * event, 
-                const char * origin, const char ** params, unsigned int count)
+void dump_event(irc_session_t *session, const char *event, 
+                const char *origin, const char **params, unsigned int count)
 {
     char buf[512];
     int cnt;
@@ -27,10 +27,10 @@ void dump_event(irc_session_t * session, const char * event,
 }
 
 
-void event_join(irc_session_t * session, const char * event,
-                const char * origin, const char ** params, unsigned int count)
+void event_join(irc_session_t *session, const char *event,
+                const char *origin, const char **params, unsigned int count)
 {
-    irc_ctx_t * ctx;
+    irc_ctx_t *ctx;
     ctx = irc_get_ctx(session);
     dump_event(session, event, origin, params, count);
     irc_cmd_user_mode(session, "+i");
@@ -39,16 +39,16 @@ void event_join(irc_session_t * session, const char * event,
                                                         " devils are here.");
 }
 
-void event_connect(irc_session_t * session, const char * event,
-                const char * origin, const char ** params, unsigned int count)
+void event_connect(irc_session_t *session, const char *event,
+                const char *origin, const char **params, unsigned int count)
 {
-    irc_ctx_t * ctx = (irc_ctx_t *) irc_get_ctx (session);
+    irc_ctx_t *ctx = (irc_ctx_t *) irc_get_ctx (session);
     dump_event(session, event, origin, params, count);
     irc_cmd_join(session, ctx->channel, 0);
 }
 
-void event_privmsg(irc_session_t * session, const char * event, 
-                const char * origin, const char ** params, unsigned int count)
+void event_privmsg(irc_session_t *session, const char *event, 
+                const char *origin, const char **params, unsigned int count)
 {
     dump_event(session, event, origin, params, count);
 
@@ -57,8 +57,8 @@ void event_privmsg(irc_session_t * session, const char * event,
         params[0], params[1]);
 }
 
-void event_channel(irc_session_t * session, const char * event, 
-                const char * origin, const char ** params, unsigned int count)
+void event_channel(irc_session_t *session, const char *event, 
+                const char *origin, const char **params, unsigned int count)
 {
     char *title;
     char *url;
@@ -98,8 +98,8 @@ void event_channel(irc_session_t * session, const char * event,
     }
 }
 
-void event_numeric(irc_session_t * session, unsigned int event, 
-                const char * origin, const char ** params, unsigned int count)
+void event_numeric(irc_session_t *session, unsigned int event, 
+                const char *origin, const char **params, unsigned int count)
 {
     char buf[24];
     sprintf(buf, "%d", event);
@@ -107,19 +107,19 @@ void event_numeric(irc_session_t * session, unsigned int event,
     dump_event(session, buf, origin, params, count);
 }
 
-void irc_event_dcc_chat(irc_session_t * session, const char * nick, 
-                                            const char * addr, irc_dcc_t dccid)
+void irc_event_dcc_chat(irc_session_t *session, const char *nick, 
+                                            const char *addr, irc_dcc_t dccid)
 {
     printf("DCC chat [%d] requested from '%s' (%s)\n", dccid, nick, addr);
 
     irc_dcc_accept(session, dccid, 0, dcc_recv_callback);
 }
 
-void irc_event_dcc_send(irc_session_t * session, const char * nick, 
-                                    const char * addr, const char * filename, 
+void irc_event_dcc_send(irc_session_t *session, const char *nick, 
+                                    const char *addr, const char *filename, 
                                     unsigned long size, irc_dcc_t dccid)
 {
-    FILE * fp;
+    FILE *fp;
     printf("DCC send [%d] requested from '%s' (%s): %s (%lu bytes)\n", 
                                             dccid, nick, addr, filename, size);
 

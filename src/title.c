@@ -13,14 +13,15 @@ struct mem_vec {
     size_t size;
 };
 
-/*  libxml callback context structure */
-struct context {
+/* libxml callback context structure */
+struct context
+{
     int add_title;
     char *title;
     size_t len;
 };
 
-/*  libcurl write callback function */
+/* libcurl write callback function */
 static size_t writer(void *contents, size_t size, size_t nmemb, void *userp)
 {
     size_t realsize = size * nmemb;
@@ -39,9 +40,9 @@ static size_t writer(void *contents, size_t size, size_t nmemb, void *userp)
     return realsize;
 }
 
-/*  libcurl connection initialization */
+/* libcurl connection initialization */
 static int init(CURL **conn, const char *url, struct mem_vec *chunk, 
-                                                        char *curl_err_buff)
+                                        char *curl_err_buff)
 {
     CURLcode code;
 
@@ -81,31 +82,36 @@ static int init(CURL **conn, const char *url, struct mem_vec *chunk,
         fprintf(stderr, "Failed to set write data [%s]\n", curl_err_buff);
         return 0;
     }
+
     return 1;
 }
 
-/*  libxml start element callback function */
-static void start_elem(void *void_ctxt, const xmlChar *name, 
-                                        const xmlChar **attributes)
+/* libxml start element callback function */
+static void start_elem(void *void_ctxt,
+        const xmlChar *name,
+        const xmlChar **attributes)
 {
     struct context *ctxt = void_ctxt;
     if (!strcasecmp((char *)name, "TITLE"))
         ctxt->add_title = 1;
 }
 
-/*  libxml end element callback function */
-static void end_elem(void *void_ctxt, const xmlChar *name)
+/* libxml end element callback function */
+static void end_elem(void *void_ctxt,
+        const xmlChar *name)
 {
     struct context *ctxt = void_ctxt;
 
     if (!strcasecmp((char *)name, "TITLE")) {
         ctxt->add_title = 0;
+        ctxt->title = realloc(ctxt->title, ctxt->len + 1);
         ctxt->title[ctxt->len] = '\0';
     }
 }
 
-/*  Text handling helper function */
-static void handle_chars(struct context *ctxt, const xmlChar *chars, int length)
+/* Text handling helper function */
+static void handle_chars(struct context *ctxt, const xmlChar *chars, 
+                             int length)
 {
     if (ctxt->add_title) {
         ctxt->title = realloc(ctxt->title, ctxt->len + length);
@@ -114,23 +120,27 @@ static void handle_chars(struct context *ctxt, const xmlChar *chars, int length)
     }
 }
 
-/*  libxml PCDATA callback function */
-static void chars(void *void_ctxt, const xmlChar *chars, int length)
+/* libxml PCDATA callback function */
+static void chars(void *void_ctxt,
+        const xmlChar *chars,
+        int length)
 {
    struct context *ctxt = void_ctxt;
 
     handle_chars(ctxt, chars, length);
 }
 
-/*  libxml CDATA callback function */
-static void cdata(void *void_ctxt, const xmlChar *chars, int length)
+/* libxml CDATA callback function */
+static void cdata(void *void_ctxt,
+        const xmlChar *chars,
+        int length)
 {
    struct context *ctxt = void_ctxt;
 
     handle_chars(ctxt, chars, length);
 }
 
-/*  libxml SAX callback structure */
+/* libxml SAX callback structure */
 static htmlSAXHandler saxHandler =
 {
     NULL,
@@ -162,7 +172,7 @@ static htmlSAXHandler saxHandler =
     NULL
 };
 
-/*  Parse given (assumed to be) HTML text and return the title */
+/* Parse given (assumed to be) HTML text and return the title */
 static void parseHtml(const char *html, size_t size, char **title)
 {
     htmlParserCtxtPtr ctxt;
@@ -189,21 +199,19 @@ char *get_title(const char *url)
     char *title;
     char *title_prefixed;
     char *prefix = "Title: "; /* strlen(prefix) == 7 */
-    
-    chunk.memory = malloc(1);
+   
+    chunk.memory = NULL;
     chunk.size = 0;
 
     curl_global_init(CURL_GLOBAL_DEFAULT);
 
     /* Initialize CURL connection */
-
     if (!init(&conn, url, &chunk, (char *) &curl_err_buff)) {
         fprintf(stderr, "Connection initializion failed\n");
         return NULL;
     }
 
     /* Retrieve content for the URL */
-
     code = curl_easy_perform(conn);
     curl_easy_cleanup(conn);
 
