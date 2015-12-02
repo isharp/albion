@@ -14,13 +14,11 @@ void dump_event(irc_session_t *session, const char *event,
     int cnt;
 
     buf[0] = '\0';
-
     for (cnt = 0; cnt < count; cnt++){
         if (cnt)
             strcat(buf, "|");
         strcat(buf, params[cnt]);
     }
-    
     addlog("Event \"%s\", origin: \"%s\", params: %d [%s]", event, 
                                             origin ? origin : "NULL", cnt, buf);
 }
@@ -56,6 +54,14 @@ void event_privmsg(irc_session_t *session, const char *event,
         params[0], params[1]);
 }
 
+void event_kick(irc_session_t *session, const char *event, 
+                const char *origin, const char **params, unsigned int count)
+{
+    dump_event(session, event, origin, params, count);
+    irc_cmd_join(session, params[0], 0);
+
+}
+
 void event_channel(irc_session_t *session, const char *event, 
                 const char *origin, const char **params, unsigned int count)
 {
@@ -81,7 +87,7 @@ void event_channel(irc_session_t *session, const char *event,
         }
     }
     if (!strcmp(params[1], ".help")) {
-        irc_cmd_msg(session, params[0], ".help, .ping");
+        irc_cmd_msg(session, params[0], ".help, .ping, .urban frat 3");
     } else if (!strcmp(params[1], ".ping")) {
         irc_cmd_msg(session, params[0], "pong");
     } else if (!strcmp(params[1], ".urban frat 3")) {

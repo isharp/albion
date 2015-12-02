@@ -14,7 +14,7 @@ void set_default_callbacks(irc_callbacks_t *callbacks)
     callbacks->event_part = dump_event;
     callbacks->event_mode = dump_event;
     callbacks->event_topic = dump_event;
-    callbacks->event_kick = dump_event;
+    callbacks->event_kick = event_kick;
     callbacks->event_channel = event_channel;
     callbacks->event_privmsg = event_privmsg;
     callbacks->event_notice = dump_event;
