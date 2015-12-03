@@ -2,7 +2,7 @@ EXECUTABLE=albion
 CC = gcc
 LIBS = -lssl -lcrypto  -lnsl -lcurl -lxml2 lib/libircclient.a
 INCLUDES= -Iinclude -Ilib/include -I/usr/include/libxml2 -I/usr/include/curl
-CFLAGS = -g -Wall -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -O3 -fpic -DENABLE_SSL -Llib $(INCLUDES)
+CFLAGS = -Wall -march=native -O2 -pipe -fstack-protector-strong -O3 -fpic -DENABLE_SSL -Llib $(INCLUDES)
 
 SRC = $(wildcard src/*.c)
 PREREQ_WILD = $(patsubst %.c, %.o, $(SRC))
@@ -21,3 +21,10 @@ lib/config.h:
 
 clean:
 	rm -f src/*.o  $(EXECUTABLE)
+
+distclean:
+	rm -f src/*.o  $(EXECUTABLE)
+	rm -f lib/config.h
+	rm -f lib/libircclient.o
+	rm -f lib/libircclient.a
+

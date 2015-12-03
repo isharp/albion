@@ -24,8 +24,14 @@ int main(int argc, char **argv)
     unsigned short port = 6667;
 
     if (argc != 4) {
-        printf("Usage: %s [##]<server> <nick> <channel> "
-                            "(##<server> for no-verify SSL)\n", argv[0]);
+        printf("Usage: %s [#][#]<server> <nick> <channel>\n"
+                            "(#<server> for SSL.)\n"
+                            "(##<server> for no-verify SSL.)\n\n"
+                            "Depending on your shell configuration,\n"
+                            "you may need to escape the '#' characters.\n\n"
+                            "Sample invocation:\n"
+                            "./albion ##irc.myserver.net:6697 albion"
+                            " #mychannel\n\n", argv[0]);
         return 1;
     }
 
