@@ -24,6 +24,7 @@ clean:
 
 distclean:
 	rm -f src/*.o  $(EXECUTABLE)
+	rm -f albion.log
 	rm -f lib/config.*
 	rm -f lib/libircclient.o
 	rm -f lib/libircclient.a
