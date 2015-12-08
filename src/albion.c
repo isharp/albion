@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 #include "libircclient.h"
 #include "event.h"
@@ -64,6 +65,8 @@ int main(int argc, char **argv)
         irc_option_set(s, LIBIRC_OPTION_SSL_NO_VERIFY);
     }
     
+    srand(time(NULL));
+
     // Initiate the IRC server connection
     if (irc_connect(s, argv[1], port, 0, argv[2], 0, 0)) {
         printf("Could not connect: %s\n", irc_strerror(irc_errno(s)));

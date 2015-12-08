@@ -68,6 +68,8 @@ void event_channel(irc_session_t *session, const char *event,
 {
     char *title;
     char *url;
+    unsigned int num;
+    char num_str[4];
 
     if (count != 2)
         return;
@@ -88,7 +90,7 @@ void event_channel(irc_session_t *session, const char *event,
         }
     }
     if (!strcmp(params[1], ".help")) {
-        irc_cmd_msg(session, params[0], ".help, .ping, .urban frat 3");
+        irc_cmd_msg(session, params[0], ".help, .ping, .dubs, .urban frat 3");
     } else if (!strcmp(params[1], ".ping")) {
         irc_cmd_msg(session, params[0], "pong");
     } else if (!strcmp(params[1], ".urban frat 3")) {
@@ -101,6 +103,10 @@ void event_channel(irc_session_t *session, const char *event,
                   "w they make new recruits wear dress clothes and act all upst"
                   "anding and important, yet they are the worst piles of trash "
                   "on campus. Most members end u");
+    } else if (!strcmp(params[1], ".dubs")) {
+        num = rand() % 100;
+        sprintf(num_str, "%u", num);
+        irc_cmd_msg(session, params[0], num_str);
     }
 }
 
