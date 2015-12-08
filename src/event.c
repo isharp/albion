@@ -107,7 +107,14 @@ void event_channel(irc_session_t *session, const char *event,
         num = rand() % 100;
         sprintf(num_str, "%u", num);
         irc_cmd_msg(session, params[0], num_str);
+    } else if (!strncmp(params[1], ".decide", 7)) {
+        num = rand() % 2;
+        if (num)
+            irc_cmd_msg(session, params[0], "Yes.");
+        else
+            irc_cmd_msg(session, params[0], "No.");
     }
+
 }
 
 void event_numeric(irc_session_t *session, unsigned int event, 
