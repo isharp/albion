@@ -90,7 +90,8 @@ void event_channel(irc_session_t *session, const char *event,
         }
     }
     if (!strcmp(params[1], ".help")) {
-        irc_cmd_msg(session, params[0], ".help, .ping, .dubs, .urban frat 3");
+        irc_cmd_msg(session, params[0], ".help, .ping, .dubs, .decide, "
+                                                        ".urban frat 3");
     } else if (!strcmp(params[1], ".ping")) {
         irc_cmd_msg(session, params[0], "pong");
     } else if (!strcmp(params[1], ".urban frat 3")) {

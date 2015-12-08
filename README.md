@@ -27,5 +27,9 @@ albion supports the following commands:
 
 .ping  -- replies with 'pong'
 
+.dubs  -- generates a random integer on the interval [0, 99]
+
+.decide -- replies with "Yes." or "No." with equal probability.
+
 .urban frat 3  -- a joke command that should probably be ignored by anyone who
 isn't in on the joke.
