@@ -105,7 +105,7 @@ void event_channel(irc_session_t *session, const char *event,
                   "anding and important, yet they are the worst piles of trash "
                   "on campus. Most members end u");
     } else if (!strcmp(params[1], ".dubs")) {
-        num = rand() % 100;
+        num = rand() % 90 + 10;
         sprintf(num_str, "%u", num);
         irc_cmd_msg(session, params[0], num_str);
     } else if (!strncmp(params[1], ".decide", 7)) {
