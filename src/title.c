@@ -221,6 +221,8 @@ char *get_title(const char *url)
     }
 
     /* Parse the (assumed) HTML code */
+    if (!chunk.memory)
+        return NULL;
     chunk.memory[chunk.size] = '\0';
     parseHtml(chunk.memory, chunk.size, &title);
     free(chunk.memory);
