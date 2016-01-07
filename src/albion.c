@@ -17,7 +17,6 @@
 #include "event.h"
 #include "albion_init.h"
 
-
 int main(int argc, char **argv)
 {
     irc_callbacks_t callbacks;

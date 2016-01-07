@@ -3,8 +3,6 @@
 #include "libircclient.h"
 #include "string.h"
 
-static int log_ind = 0;
-static char ** log_buff[1024][100];
 
 void set_default_callbacks(irc_callbacks_t *callbacks)
 {
