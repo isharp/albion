@@ -43,11 +43,13 @@ const char * find_msg(const char *msg)
 	int mark = 0;
 	int found = 0;
 	char * edit;
+    
+    if (strlen(msg) < 4)
+        return NULL;
 
 	while (msg[ind] != '/'){
 		ind++;
 	}
-
 	memcpy(&search, &msg[3], ind++ - 3);
 	mark = ind;
 

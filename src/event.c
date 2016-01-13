@@ -71,7 +71,6 @@ void event_channel(irc_session_t *session, const char *event,
     char *url;
     unsigned int num;
     char num_str[4];
-    char sed_return_str[1024];
 
     if (count != 2)
         return;
