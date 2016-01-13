@@ -117,9 +117,9 @@ void event_channel(irc_session_t *session, const char *event,
             irc_cmd_msg(session, params[0], "Yes.");
         else
             irc_cmd_msg(session, params[0], "No.");
-    } else if (!strncmp(params[1], ".s/", 3)) {
+    } /* else if (!strncmp(params[1], ".s/", 3)) {
         irc_cmd_msg(session, params[0], find_msg(params[1]));
-    }
+    } */
 
 }
 
