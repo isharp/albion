@@ -12,7 +12,7 @@ void log_msg(const char *msg, const char *nick)
 	bzero(buff, 1024);
 	int i = 0;
 
-	while(nick[i] != '!') {
+	while (nick[i] != '!') {
 		i++;
 	}
 
@@ -22,7 +22,7 @@ void log_msg(const char *msg, const char *nick)
 
 	memcpy(log_buff[log_ind].line, buff, 1024);
 
-	if(log_ind == 99){
+	if (log_ind == 99){
 		log_ind = 0;
 	} else{
 		log_ind++;
@@ -44,27 +44,27 @@ const char * find_msg(const char *msg)
 	int found = 0;
 	char * edit;
 
-	while(msg[ind] != '/'){
+	while (msg[ind] != '/'){
 		ind++;
 	}
 
 	memcpy(&search, &msg[3], ind++ - 3);
 	mark = ind;
 
-	while(msg[ind] != '\0'){
+	while (msg[ind] != '\0'){
 		ind++;
 	}
 
 	memcpy(&replace, &msg[mark], ind - mark);
 	ind = log_ind - 2;
 
-	while(!found){
-		if((edit = strstr(log_buff[ind].line, search)) != NULL){
-			if(strncmp(log_buff[ind].line, ".s/", 3)) {
+	while (!found){
+		if ((edit = strstr(log_buff[ind].line, search)) != NULL){
+			if (strncmp(log_buff[ind].line, ".s/", 3)) {
 				found = 1;
 			}
 		} else {
-			if(!ind){
+			if (!ind){
 				ind = 99;
 			} else {
 				ind--;
@@ -72,7 +72,8 @@ const char * find_msg(const char *msg)
 		}
 	}
 
-	strncat(output, log_buff[ind].line, strlen(log_buff[ind].line) - strlen(edit));
+	strncat(output, log_buff[ind].line, strlen(log_buff[ind].line)
+                                         - strlen(edit));
 	strcat(output, replace);
 	strcat(output, edit + strlen(search));
 

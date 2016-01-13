@@ -1,6 +1,6 @@
 EXECUTABLE=albion
 CC = gcc
-LIBS = -lssl -lcrypto  -lnsl -lcurl -lxml2 lib/libircclient.c
+LIBS = -lssl -lcrypto  -lnsl -lcurl -lxml2 lib/libircclient.a
 INCLUDES= -Iinclude -Ilib/include -I/usr/include/libxml2 -I/usr/include/curl
 CFLAGS = -Wall -march=native -O2 -pipe -fstack-protector-strong -O3 -fpic -DENABLE_SSL -Llib $(INCLUDES)
 
