@@ -1,4 +1,4 @@
-/* Basic irc client. Capable of ping-pong.
+/* Simple irc bot.
    
    Example invocation:
   

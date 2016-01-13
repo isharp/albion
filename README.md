@@ -27,6 +27,8 @@ albion supports the following commands:
 
 .ping  -- replies with 'pong'
 
+.s -- allows for sed-like substitutions to recent messages, e.g. ".s/match/replace"
+
 .dubs  -- generates a random integer on the interval [0, 99]
 
 .decide -- replies with "Yes." or "No." with equal probability.
