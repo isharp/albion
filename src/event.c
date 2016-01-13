@@ -7,6 +7,7 @@
 #include "event.h"
 #include "url.h"
 #include "title.h"
+#include "sed.h"
 
 void dump_event(irc_session_t *session, const char *event, 
                 const char *origin, const char **params, unsigned int count)
@@ -70,12 +71,14 @@ void event_channel(irc_session_t *session, const char *event,
     char *url;
     unsigned int num;
     char num_str[4];
+    char sed_return_str[1024];
 
     if (count != 2)
         return;
 
     printf("'%s' said in channel %s: %s\n", origin ? origin : "someone",
                                                     params[0], params[1] );
+    log_msg(params[1], origin);
 
     if (!origin)
         return;
@@ -114,6 +117,8 @@ void event_channel(irc_session_t *session, const char *event,
             irc_cmd_msg(session, params[0], "Yes.");
         else
             irc_cmd_msg(session, params[0], "No.");
+    } else if (!strncmp(params[1], ".s/", 3)) {
+        irc_cmd_msg(session, params[0], find_msg(params[1]));
     }
 
 }

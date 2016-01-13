@@ -3,6 +3,7 @@
 #include "libircclient.h"
 #include "string.h"
 
+
 void set_default_callbacks(irc_callbacks_t *callbacks)
 {
     memset(callbacks, 0, sizeof(*callbacks));
