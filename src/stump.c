@@ -49,8 +49,8 @@ void stump(irc_session_t *session, const char **params)
             "ime. They're rapists and some, I assume, are good people, but I sp"
             "eak to border guards and they're telling us what we're getting.";
     s[15] = "I thought that was disgusting. That showed such weakness, the way "
-            "%s was taken away by two young women—the microphone; they just too"
-            "k the whole place over... That will never happen with me. I don't "
+            "%s was taken away by two young women, the microphone; they just to"
+            "ok the whole place over. That will never happen with me. I don't "
             "know if I'll do the fighting myself or if other people will, but t"
             "hat was a disgrace. I felt badly for %s. But it showed that he's w"
             "eak.";
@@ -72,6 +72,12 @@ void stump(irc_session_t *session, const char **params)
     nick = strtok(NULL, " ");
     strtok(NULL, " ");
     if (!nick) {
+        free(line);
+        return;
+    }
+    if (!strcmp(nick, "trump") || !strcmp(nick, "Trump") 
+                               || !strcmp(nick, "TRUMP")) {
+        irc_cmd_msg(session, params[0], "You can't stump the Trump.");
         free(line);
         return;
     }
