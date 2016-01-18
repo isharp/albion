@@ -35,3 +35,5 @@ albion supports the following commands:
 
 .urban frat 3  -- a joke command that should probably be ignored by anyone who
 isn't in on the joke.
+
+.stump <nick> --- generates an Trumpean insult that will instantly put <nick> on suicide watch.

@@ -8,6 +8,7 @@
 #include "url.h"
 #include "title.h"
 #include "sed.h"
+#include "stump.h"
 
 void dump_event(irc_session_t *session, const char *event, 
                 const char *origin, const char **params, unsigned int count)
@@ -93,7 +94,7 @@ void event_channel(irc_session_t *session, const char *event,
     }
     if (!strcmp(params[1], ".help")) {
         irc_cmd_msg(session, params[0], ".help, .ping, .s, .dubs, .decide, "
-                                                        ".urban frat 3");
+                                                ".urban frat 3, .stump <nick>");
     } else if (!strcmp(params[1], ".ping")) {
         irc_cmd_msg(session, params[0], "pong");
     } else if (!strcmp(params[1], ".urban frat 3")) {
@@ -118,8 +119,9 @@ void event_channel(irc_session_t *session, const char *event,
             irc_cmd_msg(session, params[0], "No.");
     } else if (!strncmp(params[1], ".s/", 3)) {
         irc_cmd_msg(session, params[0], find_msg(params[1]));
+    } else if (!strncmp(params[1], ".stump", 6)) {
+        stump(session, params);
     }
-
 }
 
 void event_numeric(irc_session_t *session, unsigned int event, 
