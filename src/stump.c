@@ -11,10 +11,10 @@ void stump(irc_session_t *session, const char **params)
     char *line;
     char *nick;
     int n;
-    const char *s[20];
-
+    const char *s[25];
+    
     line = strdup(params[1]);
-
+    
     s[0] = "I don't even want to talk about %s. Just look at his numbers. He's "
             "a very low-energy person.";
     s[1] = "People come to me and tell me, they say, \"Donald, we like you, but"
@@ -23,6 +23,8 @@ void stump(irc_session_t *session, const char **params)
            "%s doesn't have what we need to make it great again.";
     s[3] = "Nobody likes %s, nobody in Congress likes %s, nobody likes %s anywh"
            "ere once they get to know him.";
+    s[4] = "%s is an embarrassment to himself and his family, and the Republica"
+            "n Party has essentially -- they're not even listening to %s.";
     s[5] = "Look, here's the thing about %s. We're losing in all of our deals, "
             "we're losing to Mexico, we're losing with China, and I'm sure ther"
             "e are some good ones, but %s has to go back.";
@@ -65,12 +67,27 @@ void stump(irc_session_t *session, const char **params)
     s[19] = "You want to know what will happen? The wall will go up and %s will"
             " start behaving.";
     s[20] = "Our great African American President hasn't exactly had a positive"
-            "impact on the thugs like %s who are so happily and openly destroyi"
-            "ng Baltimore!";
+            " impact on the thugs like %s who are so happily and openly destroy"
+            "ing Baltimore!";
+    s[21] = "%s is a weak and ineffective person. He's also a low-energy person"
+            ", which I've said before. ... If he were president, it would just "
+            "be more of the same. He's got money from all of the lobbyists and "
+            "all of the special interests that run him like a puppet.";
+    s[22] = "%s is weak on immigration and he’s weak on jobs. We need someone w"
+            "ho is going to make the country great again, and %s is not going t"
+            "o make the country great again.";
+    s[23] = "I will build a great wall -- and nobody builds walls better than m"
+            "e, believe me -- and I'll build them very inexpensively. I will bu"
+            "ild a great, great wall on our southern border, and I will make %s"
+            " pay for that wall. Mark my words.";
+    s[24] = "The other candidates -- like %s -- they went in, they didn't know "
+            "the air conditioning didn't work. They sweated like dogs... How ar"
+            "e they gonna beat ISIS? I don't think it's gonna happen.";
 
     strtok(line, " ");
     nick = strtok(NULL, " ");
     strtok(NULL, " ");
+
     if (!nick) {
         free(line);
         return;
@@ -81,7 +98,8 @@ void stump(irc_session_t *session, const char **params)
         free(line);
         return;
     }
-    n = rand() % 21;
+    
+    n = rand() % 25;
     sprintf(stump_msg, s[n], nick, nick, nick);
     irc_cmd_msg(session, params[0], stump_msg);
     free(line);
